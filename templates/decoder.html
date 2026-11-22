@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Behavior Decoder{% endblock %}
+
+{% block content %}
+<main class="container-xl page">
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+      <div class="eyebrow">Behavior Decoder</div>
+      <h1 class="page-title">Setiap gerakan punya cerita.</h1>
+      <p class="muted mb-0">Pilih ekor, telinga, dan suara yang kamu amati. Gabungan tiga sinyal memberi tafsiran yang lebih akurat.</p>
+    </div>
+    <span class="pill-soft"><i class="bi bi-stars"></i> Amati → Pilih → Pahami</span>
+  </div>
+
+  <div class="row g-4">
+    <!-- Kiri: input -->
+    <div class="col-lg-6">
+      <section class="panel p-4 h-100">
+        <h2 class="section-title">Apa yang kamu perhatikan?</h2>
+        <p class="muted small">Arahkan kursor untuk melihat pratinjau, klik untuk memilih. Klik lagi untuk membatalkan.</p>
+
+        <div class="seg seg-3 mb-3" role="tablist" id="tabs">
+          <button type="button" class="seg-btn on" data-tab="tail">Ekor</button>
+          <button type="button" class="seg-btn" data-tab="ears">Telinga</button>
+          <button type="button" class="seg-btn" data-tab="sound">Suara / Aksi</button>
+        </div>
+
+        <div class="preview-box mb-3">
+          <span class="pill-white" id="previewLabel">Bahasa ekor</span>
+          {% set svg_id = 'catSvg' %}
+          {% include '_cat_svg.html' %}
+        </div>
+
+        <div id="optionList" class="option-list" role="listbox" aria-label="Pilihan sinyal"></div>
+
+        <div class="d-flex flex-wrap gap-2 align-items-center mt-3" id="chosenRow"></div>
+        <button type="button" class="btn btn-soft btn-sm mt-3" id="resetBtn"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset pilihan</button>
+      </section>
+    </div>
+
+    <!-- Kanan: hasil -->
+    <div class="col-lg-6">
+      <section class="panel result-panel h-100" id="resultPanel">
+        <div class="result-empty" id="resultEmpty">
+          <div class="mx-auto mb-3" style="max-width:96px">{% set fur = '#F5A967' %}{% include '_cat_face.html' %}</div>
+          <h2 class="section-title">Terjemahan si meong</h2>
+          <p class="muted">Pilih minimal satu sinyal di sebelah kiri. Makin lengkap tiga sinyalnya, makin akurat hasilnya.</p>
+        </div>
+
+        <div id="resultBody" class="d-none">
+          <div class="result-head" id="resultHead">
+            <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap">
+              <span class="eyebrow">Terjemahan si meong</span>
+              <span class="pill-white" id="rBadge"></span>
+            </div>
+            <blockquote id="rQuote"></blockquote>
+            <p class="mb-0" id="rSummary"></p>
+          </div>
+
+          <div class="p-4">
+            <h3 class="sub-title"><i class="bi bi-stars me-2"></i>Di balik tingkahnya</h3>
+            <p class="muted" id="rInsight"></p>
+
+            <div class="signal-list" id="rSignals"></div>
+
+            <div class="conf" id="rConf"></div>
+            <div id="rScores" class="score-bars"></div>
+            <p class="small muted fst-italic d-none" id="rRule"></p>
+
+            <hr>
+            <h3 class="sub-title">Yang bisa kamu lakukan</h3>
+            <ul class="check-list" id="rTips"></ul>
+
+            <div class="vet-alert d-none" id="rVet"><i class="bi bi-exclamation-circle"></i><span></span></div>
+
+            <a class="btn btn-catbot w-100 mt-3 d-flex justify-content-center gap-2" href="{{ url_for('chat') }}">
+              <i class="bi bi-chat-square-text"></i> Bahas lebih lanjut dengan CatBot <i class="bi bi-arrow-right ms-auto"></i>
+            </a>
+
+            <details class="mt-3 small muted">
+              <summary>Landasan ilmiah &amp; metode</summary>
+              <p class="mt-2 mb-1">Metode: sistem pakar berbasis aturan dengan skor berbobot (ekor 35%, telinga 35%, suara 30%) dan aturan kombinasi khusus. Bobot adalah operasionalisasi dari deskripsi literatur, bukan hasil studi kuantitatif.</p>
+              <ul class="mb-0" id="rRefs"></ul>
+            </details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="banner banner-cream mt-4">
+    <div class="banner-icon cream"><i class="bi bi-info-circle"></i></div>
+    <p class="mb-0 small">Satu gerakan, banyak kemungkinan. Baca bahasa tubuh secara utuh. Perubahan perilaku mendadak? Konsultasikan dengan dokter hewan.</p>
+  </div>
+</main>
+
+<script id="decoder-config" type="application/json">{{ decoder_options|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/decoder.js') }}"></script>
+{% endblock %}

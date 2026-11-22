@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Ups{% endblock %}
+{% block content %}
+<main class="container-xl page text-center py-5">
+  <div class="mx-auto" style="max-width:120px">{% include '_cat_face.html' %}</div>
+  <h1 class="page-title mt-3">{{ code }}</h1>
+  <p class="muted">{{ message }}</p>
+  <a class="btn btn-catbot" href="{{ url_for('index') }}">Kembali ke beranda</a>
+</main>
+{% endblock %}

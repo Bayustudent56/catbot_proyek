@@ -1,0 +1,99 @@
+<svg class="cat-svg" id="{{ svg_id|default('catSvg') }}" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi kucing">
+  <!-- hiasan -->
+  <path d="M70 118 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6z" fill="#F7D56E"/>
+  <path d="M352 84 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z" fill="#F7D56E"/>
+  <g fill="none" stroke="#7FCBA8" stroke-width="4" stroke-linecap="round">
+    <path d="M70 346 C68 316 78 296 92 282"/>
+  </g>
+  <ellipse cx="62" cy="318" rx="16" ry="8" transform="rotate(-35 62 318)" fill="#A8E6CF"/>
+  <ellipse cx="96" cy="300" rx="16" ry="8" transform="rotate(35 96 300)" fill="#A8E6CF"/>
+  <ellipse cx="84" cy="334" rx="14" ry="7" transform="rotate(30 84 334)" fill="#A8E6CF"/>
+
+  <!-- EKOR (di belakang badan) -->
+  <g class="v on" data-cat="tail" data-v="up">
+    <path class="tail-base" d="M262 320 C335 330 345 230 313 196 C300 182 285 196 297 209"/>
+    <path class="tail-stripe" d="M262 320 C335 330 345 230 313 196 C300 182 285 196 297 209"/>
+  </g>
+  <g class="v" data-cat="tail" data-v="puffed">
+    <path class="tail-base" style="stroke-width:50" d="M262 322 C336 326 350 242 322 200"/>
+    <path class="tail-stripe" style="stroke-width:50;stroke-dasharray:6 30" d="M262 322 C336 326 350 242 322 200"/>
+  </g>
+  <g class="v" data-cat="tail" data-v="curled">
+    <path class="tail-base" d="M262 326 C318 330 340 350 326 362 C316 370 300 360 308 350"/>
+    <path class="tail-stripe" d="M262 326 C318 330 340 350 326 362 C316 370 300 360 308 350"/>
+  </g>
+  <g class="v" data-cat="tail" data-v="lash">
+    <path class="tail-base" d="M262 316 C296 296 304 336 332 306 C354 284 344 252 366 246"/>
+    <path class="tail-stripe" d="M262 316 C296 296 304 336 332 306 C354 284 344 252 366 246"/>
+  </g>
+
+  <!-- TELINGA (di belakang kepala) -->
+  <g class="v on" data-cat="ears" data-v="normal">
+    <polygon points="136,132 142,66 190,106" fill="#F5A967"/><polygon points="148,122 150,86 178,108" fill="#F8CDB0"/>
+    <polygon points="264,132 258,66 210,106" fill="#F5A967"/><polygon points="252,122 250,86 222,108" fill="#F8CDB0"/>
+  </g>
+  <g class="v" data-cat="ears" data-v="forward">
+    <polygon points="140,128 160,64 192,104" fill="#F5A967"/><polygon points="150,120 160,84 180,106" fill="#F8CDB0"/>
+    <polygon points="260,128 240,64 208,104" fill="#F5A967"/><polygon points="250,120 240,84 220,106" fill="#F8CDB0"/>
+  </g>
+  <g class="v" data-cat="ears" data-v="airplane">
+    <polygon points="142,134 78,114 152,98" fill="#F5A967"/><polygon points="138,126 98,116 148,106" fill="#F8CDB0"/>
+    <polygon points="258,134 322,114 248,98" fill="#F5A967"/><polygon points="262,126 302,116 252,106" fill="#F8CDB0"/>
+  </g>
+  <g class="v" data-cat="ears" data-v="flat">
+    <polygon points="140,130 100,138 152,104" fill="#E8964F"/>
+    <polygon points="260,130 300,138 248,104" fill="#E8964F"/>
+  </g>
+
+  <!-- BADAN -->
+  <ellipse cx="200" cy="258" rx="74" ry="88" fill="#F5A967"/>
+  <path d="M200 214 C170 214 160 270 164 334 L236 334 C240 270 230 214 200 214Z" fill="#FDF3E1"/>
+  <path d="M130 250 l14 4 M128 270 l14 3 M270 250 l-14 4 M272 270 l-14 3" stroke="#D98B4A" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="172" cy="344" rx="22" ry="12" fill="#F5A967"/>
+  <ellipse cx="228" cy="344" rx="22" ry="12" fill="#F5A967"/>
+
+  <!-- EKOR menyelip (di depan badan) -->
+  <g class="v" data-cat="tail" data-v="tucked">
+    <path class="tail-base" d="M258 332 C246 358 214 360 198 346"/>
+    <path class="tail-stripe" d="M258 332 C246 358 214 360 198 346"/>
+  </g>
+
+  <!-- KEPALA -->
+  <ellipse cx="200" cy="158" rx="70" ry="60" fill="#F5A967"/>
+  <path d="M200 100 v16 M186 102 l3 12 M214 102 l-3 12" stroke="#D98B4A" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M134 168 l16 3 M134 181 l14 0 M266 168 l-16 3 M266 181 l-14 0" stroke="#D98B4A" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <ellipse cx="172" cy="156" rx="6" ry="9" fill="#2D4A3E"/><circle cx="174" cy="152" r="2" fill="#fff"/>
+  <ellipse cx="228" cy="156" rx="6" ry="9" fill="#2D4A3E"/><circle cx="230" cy="152" r="2" fill="#fff"/>
+  <ellipse cx="200" cy="184" rx="26" ry="18" fill="#FDF3E1"/>
+  <path d="M192 172 h16 l-8 9z" fill="#2D4A3E"/>
+
+  <!-- SUARA / AKSI -->
+  <g class="v on" data-cat="sound" data-v="idle">
+    <path d="M188 188 Q194 198 200 188 Q206 198 212 188" stroke="#2D4A3E" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+  <g class="v" data-cat="sound" data-v="purr">
+    <path d="M188 188 Q194 198 200 188 Q206 198 212 188" stroke="#2D4A3E" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M122 192 q-8 6 0 12 q8 6 0 12 M278 192 q8 6 0 12 q-8 6 0 12 M108 188 q-8 8 0 16 q8 8 0 16 M292 188 q8 8 0 16 q-8 8 0 16" stroke="#7FCBA8" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+  <g class="v" data-cat="sound" data-v="hiss">
+    <path d="M184 186 Q200 216 216 186 Z" fill="#C8574B"/>
+    <path d="M188 187 l4 9 l4 -9z M204 187 l4 9 l4 -9z" fill="#fff"/>
+    <path d="M240 200 l26 8 M240 214 l24 14 M160 200 l-26 8 M160 214 l-24 14" stroke="#7FCBA8" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+  <g class="v" data-cat="sound" data-v="knead">
+    <path d="M188 188 Q194 198 200 188 Q206 198 212 188" stroke="#2D4A3E" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <ellipse cx="160" cy="300" rx="16" ry="20" fill="#F5A967" stroke="#D98B4A" stroke-width="2"/><circle cx="160" cy="305" r="6" fill="#F8CDB0"/>
+    <ellipse cx="242" cy="312" rx="16" ry="20" fill="#F5A967" stroke="#D98B4A" stroke-width="2"/><circle cx="242" cy="317" r="6" fill="#F8CDB0"/>
+    <path d="M300 130 c-6 -10 -18 -4 -12 6 l12 12 l12 -12 c6 -10 -6 -16 -12 -6z" fill="#F8A5A5" transform="scale(.8) translate(80 20)"/>
+  </g>
+  <g class="v" data-cat="sound" data-v="trill">
+    <ellipse cx="200" cy="193" rx="6" ry="7" fill="#C8574B"/>
+    <text x="288" y="150" font-size="28" fill="#2A6F57" font-family="sans-serif">♪</text>
+    <text x="310" y="178" font-size="22" fill="#2A6F57" font-family="sans-serif">♫</text>
+  </g>
+  <g class="v" data-cat="sound" data-v="yowl">
+    <ellipse cx="200" cy="199" rx="14" ry="20" fill="#C8574B"/>
+    <ellipse cx="200" cy="211" rx="8" ry="6" fill="#F08A7E"/>
+    <path d="M250 180 q16 14 0 28 M262 172 q24 22 0 44 M150 180 q-16 14 0 28 M138 172 q-24 22 0 44" stroke="#7FCBA8" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

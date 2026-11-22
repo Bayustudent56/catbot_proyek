@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Masuk{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+{% block nav %}{% endblock %}
+{% block flash %}{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <section class="auth-hero">
+    <a class="brand" href="{{ url_for('index') }}">{% include '_logo.html' %}<span>CatBot</span></a>
+    <span class="pill-soft mt-5"><i class="bi bi-heart"></i> A little care. A lot of purrs.</span>
+    <h2 class="hero-title">Happy cats.<br>Confident humans.</h2>
+    <p class="hero-sub">Kenali si meong lebih dekat. Teman pintar untuk setiap pertanyaan dan setiap tingkah lucunya.</p>
+    <div class="hero-art">
+      {% include '_cat_svg.html' %}
+      <div class="hero-note"><i class="bi bi-heart"></i>
+        <div><strong>Small moments, better care.</strong><small>Selalu ada untuk si meong.</small></div>
+      </div>
+    </div>
+    <small class="hero-foot">DIBUAT UNTUK CAT PARENTS, DENGAN HATI</small>
+  </section>
+
+  <section class="auth-form-side">
+    <div class="auth-form">
+      <a class="brand d-lg-none mb-4" href="{{ url_for('index') }}">{% include '_logo.html' %}<span>CatBot</span></a>
+      <h1>Selamat datang<br>kembali.</h1>
+      <p class="muted mb-4">Si meong sudah menunggumu. Yuk, masuk!</p>
+
+      {% include '_flash.html' %}
+
+      <div class="seg mb-4" role="tablist">
+        <button type="button" class="seg-btn {{ 'on' if active_tab == 'login' }}" data-target="form-login">Masuk</button>
+        <button type="button" class="seg-btn {{ 'on' if active_tab == 'register' }}" data-target="form-register">Daftar</button>
+      </div>
+
+      <form id="form-login" method="post" action="{{ url_for('login', next=request.args.get('next')) }}" class="{{ '' if active_tab == 'login' else 'd-none' }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="mb-3">
+          <label class="form-label" for="l-email">Alamat email</label>
+          <input class="form-control" id="l-email" type="email" name="email" placeholder="nama@email.com" required autocomplete="email">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="l-pass">Kata sandi</label>
+          <div class="input-eye">
+            <input class="form-control" id="l-pass" type="password" name="password" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+            <button type="button" class="eye" data-eye="l-pass" aria-label="Tampilkan kata sandi"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3 small">
+          <label class="form-check m-0"><input class="form-check-input" type="checkbox" name="remember" checked> <span class="form-check-label">Ingat saya</span></label>
+          <span class="muted">Lupa kata sandi? Hubungi admin.</span>
+        </div>
+        <button class="btn btn-catbot w-100 d-flex justify-content-between">Masuk ke CatBot <i class="bi bi-arrow-right"></i></button>
+      </form>
+
+      <form id="form-register" method="post" action="{{ url_for('register') }}" class="{{ '' if active_tab == 'register' else 'd-none' }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="mb-3">
+          <label class="form-label" for="r-name">Nama</label>
+          <input class="form-control" id="r-name" name="username" value="{{ form.get('username', '') }}" placeholder="Nama kamu" maxlength="80" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="r-email">Alamat email</label>
+          <input class="form-control" id="r-email" type="email" name="email" value="{{ form.get('email', '') }}" placeholder="nama@email.com" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="r-pass">Kata sandi (min. 8 karakter)</label>
+          <div class="input-eye">
+            <input class="form-control" id="r-pass" type="password" name="password" minlength="8" required autocomplete="new-password">
+            <button type="button" class="eye" data-eye="r-pass" aria-label="Tampilkan kata sandi"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="r-confirm">Ulangi kata sandi</label>
+          <input class="form-control" id="r-confirm" type="password" name="confirm" minlength="8" required autocomplete="new-password">
+        </div>
+        <button class="btn btn-catbot w-100 d-flex justify-content-between">Buat akun <i class="bi bi-arrow-right"></i></button>
+      </form>
+
+      <div class="divider"><span>atau lanjutkan dengan</span></div>
+
+      {% if google_enabled %}
+      <a class="btn btn-outline-soft w-100 mb-2" href="{{ url_for('login_google') }}"><i class="bi bi-google me-2"></i>Lanjutkan dengan Google</a>
+      {% else %}
+      <button class="btn btn-outline-soft w-100 mb-2" type="button" disabled title="Isi GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET di file .env"><i class="bi bi-google me-2"></i>Lanjutkan dengan Google</button>
+      {% endif %}
+      <a class="btn btn-soft w-100" href="{{ url_for('guest') }}"><i class="bi bi-person me-2"></i>Coba sebagai tamu (tanya umum)</a>
+
+      <p class="small muted text-center mt-4 mb-0">Dengan melanjutkan, kamu menyetujui Ketentuan Layanan &amp; Kebijakan Privasi.</p>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll('.seg-btn').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('on', b === btn));
+    ['form-login', 'form-register'].forEach(id =>
+      document.getElementById(id).classList.toggle('d-none', id !== btn.dataset.target));
+  }));
+  document.querySelectorAll('[data-eye]').forEach(btn => btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.dataset.eye);
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    btn.firstElementChild.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+  }));
+</script>
+{% endblock %}

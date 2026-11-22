@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Kucingku{% endblock %}
+
+{% block content %}
+{% set furs = ['#F5A967', '#F3F0EA', '#9AA5B1', '#8A6E5A', '#E8C9A0'] %}
+<main class="container-xl page">
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+      <div class="eyebrow">Rumah kecil untuk si meong</div>
+      <h1 class="page-title">Halo, {{ current_user.first_name }}. Apa kabar si meong?</h1>
+      <p class="muted mb-0">Setiap kucing punya cerita. Yuk, beri mereka perhatian terbaik hari ini.</p>
+    </div>
+    <span class="pill-soft"><i class="bi bi-heart"></i> {{ cats|length }} kucing, banyak cinta</span>
+  </div>
+
+  <div class="banner banner-mint mb-5">
+    <div class="banner-icon"><i class="bi bi-stars"></i></div>
+    <div class="flex-grow-1">
+      <h2>Sedikit perhatian, besar artinya.</h2>
+      <p class="muted mb-0">Dari porsi makan sampai tingkah unik, CatBot siap menemanimu.</p>
+    </div>
+    <a class="btn btn-catbot" href="{{ url_for('chat') }}">Yuk, konsultasi <i class="bi bi-arrow-right ms-3"></i></a>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-end mb-3">
+    <div>
+      <h2 class="section-title">Kucing kesayanganmu</h2>
+      <p class="muted small mb-0">Pilih teman berbulu untuk mulai konsultasi.</p>
+    </div>
+    <span class="muted small">{{ cats|length }} profil kucing</span>
+  </div>
+
+  <div class="row g-4 mb-5">
+    {% for cat in cats %}
+    {% set fur = furs[loop.index0 % furs|length] %}
+    <div class="col-md-6 col-lg-4">
+      <article class="cat-card">
+        <div class="cat-cover" style="--cover: {{ fur }}22">
+          <span class="pill-white">Siap cerita</span>
+          {% include '_cat_face.html' %}
+        </div>
+        <div class="cat-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <h3>{{ cat.name }}</h3>
+            <div class="dropdown">
+              <button class="icon-btn" data-bs-toggle="dropdown" aria-label="Menu {{ cat.name }}"><i class="bi bi-three-dots"></i></button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li><a class="dropdown-item" href="{{ url_for('cat_edit', cat_id=cat.id) }}"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                <li><button class="dropdown-item text-danger" data-delete-url="{{ url_for('cat_delete', cat_id=cat.id) }}" data-name="{{ cat.name }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash me-2"></i>Hapus</button></li>
+              </ul>
+            </div>
+          </div>
+          <p class="muted mb-1">{{ cat.breed }}</p>
+          <p class="muted small mb-3">{{ cat.age_label }} · {{ cat.gender }}</p>
+          <a class="btn {{ 'btn-catbot' if loop.first else 'btn-soft' }} w-100" href="{{ url_for('chat', cat_id=cat.id) }}"><i class="bi bi-chat-square-text me-2"></i>Mulai Konsultasi</a>
+        </div>
+      </article>
+    </div>
+    {% endfor %}
+
+    <div class="col-md-6 col-lg-4">
+      <a class="cat-add" href="{{ url_for('cat_new') }}">
+        <span class="plus"><i class="bi bi-plus-lg"></i></span>
+        <h3>{{ 'Satu lagi anggota keluarga?' if cats else 'Tambahkan kucing pertamamu' }}</h3>
+        <p class="muted small">Buat profil agar saran perawatan lebih personal untuk setiap kucing.</p>
+        <span class="btn btn-outline-soft btn-sm"><i class="bi bi-plus me-1"></i>Tambah kucing</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="banner banner-cream">
+    <div class="banner-icon cream"><i class="bi bi-heart"></i></div>
+    <div class="flex-grow-1">
+      <h2>Kalau kucingmu bisa bicara...</h2>
+      <p class="muted mb-0">Pahami arti gerakan ekor, telinga, dan suara si meong.</p>
+    </div>
+    <a class="btn btn-white" href="{{ url_for('decoder') }}">Buka Behavior Decoder <i class="bi bi-arrow-right ms-3"></i></a>
+  </div>
+</main>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" method="post" id="deleteForm">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="modal-header border-0"><h5 class="modal-title">Hapus profil kucing?</h5></div>
+      <div class="modal-body pt-0">Profil <strong id="deleteName"></strong> beserta seluruh riwayat chatnya akan dihapus permanen.</div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-soft" data-bs-dismiss="modal">Batal</button>
+        <button class="btn btn-danger">Hapus</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll('[data-delete-url]').forEach(btn => btn.addEventListener('click', () => {
+    document.getElementById('deleteForm').action = btn.dataset.deleteUrl;
+    document.getElementById('deleteName').textContent = btn.dataset.name;
+  }));
+</script>
+{% endblock %}

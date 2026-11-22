@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit ' ~ cat.name if cat else 'Tambah kucing' }}{% endblock %}
+
+{% block content %}
+<main class="container-xl page">
+  <div class="form-card mx-auto">
+    <a class="back-link mb-3" href="{{ url_for('dashboard') }}"><i class="bi bi-arrow-left"></i> Kembali ke Kucingku</a>
+    <h1 class="page-title mb-1">{{ 'Edit data ' ~ cat.name if cat else 'Satu lagi anggota keluarga' }}</h1>
+    <p class="muted mb-4">Data ini membantu CatBot memberi saran yang lebih personal.</p>
+
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="mb-3">
+        <label class="form-label" for="name">Nama kucing</label>
+        <input class="form-control" id="name" name="name" value="{{ values.get('name', '') }}" maxlength="60" required placeholder="Contoh: Milo">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="breed">Ras</label>
+        <input class="form-control" id="breed" name="breed" list="breedList" value="{{ values.get('breed', '') }}" maxlength="60" placeholder="Domestic Shorthair">
+        <datalist id="breedList">{% for b in breeds %}<option value="{{ b }}">{% endfor %}</datalist>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label" for="age_years">Umur (tahun)</label>
+          <input class="form-control" id="age_years" name="age_years" type="number" min="0" max="30" value="{{ values.get('age_years', 0) }}">
+        </div>
+        <div class="col-6">
+          <label class="form-label" for="age_months">+ bulan</label>
+          <input class="form-control" id="age_months" name="age_months" type="number" min="0" max="11" value="{{ values.get('age_months', 0) }}">
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="form-label d-block">Jenis kelamin</span>
+        <div class="seg">
+          {% for g in ['Jantan', 'Betina'] %}
+          <label class="seg-btn {{ 'on' if values.get('gender', 'Jantan') == g }}">
+            <input class="visually-hidden" type="radio" name="gender" value="{{ g }}" {{ 'checked' if values.get('gender', 'Jantan') == g }}> {{ g }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="notes">Catatan (alergi, kebiasaan, riwayat penyakit)</label>
+        <textarea class="form-control" id="notes" name="notes" rows="3" maxlength="500">{{ values.get('notes', '') }}</textarea>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-catbot px-4">{{ 'Simpan perubahan' if cat else 'Tambah kucing' }}</button>
+        <a class="btn btn-soft" href="{{ url_for('dashboard') }}">Batal</a>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll('.seg input[type=radio]').forEach(r => r.addEventListener('change', () => {
+    document.querySelectorAll('.seg .seg-btn').forEach(l => l.classList.toggle('on', l.contains(r) && r.checked));
+  }));
+</script>
+{% endblock %}
